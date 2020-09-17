@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chatter Box</title>
+    <link rel="icon" href="./icons/icon.png">
+    <link rel="stylesheet" href="./pages/Index/index.css">
+    <link rel="stylesheet" href="./pages/style.css">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+
+
+    <!-- <script src="./firebase/firebase.js"></script> -->
+    
+</head>
+<body>
+        <div class="col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 col-xs-12 ">
+            <div class="mainDiv">
+                    <div class="text-center">
+                        <img src="./icons/logo.png" width="180" height="auto" alt="Chatter_Box_LOGO">
+                    </div>
+                 
+                    <!-- -- -- -- -- -- SIGNUP FORM -- -- -- --  -->
+                    <form id="signupForm">
+                        <h2 class="mt-3 text-center">Create Account</h2>
+                        <p class="text-center">Get started with your free account</p>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input id="txtFullName" class="form-control" placeholder="Full name" type="text">
+                            <small id="fullNameMesg" class="mesg"></small>
+                        </div>
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <input id="txtEmail" class="form-control" placeholder="Email address" type="email">
+                            <small id="emailMesg" class="mesg"></small>
+                        </div>
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input id="txtPass" class="form-control" placeholder="Create password" type="password">
+                            <small id="passMesg" class="mesg"></small>
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input id="txtRePass" class="form-control" placeholder="Repeat password" type="password">
+                            <small id="rePassMesg" class="mesg"></small>
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-image"></i> </span>
+                            </div>
+                            <input id="imgProfile" class="form-control" placeholder="Browse your Image" type="file">
+                            <small id="imageMesg" class="mesg"></small>
+                        </div>                                      
+                        <div class="form-group">
+                            <button type="button" class="btn btn-appColor btn-block" id="btnSignUpWithEmail"> Create Account  </button>
+                        </div>      
+                        <p class="text-center askMesg" >Have an account ? <span id="showLoginForm">Log In here</span> </p>                                                                 
+                    </form>
+                    <!-- -- -- -- -- -- LOGIN FORM -- -- -- --  -->
+                    <form id="loginForm">
+                        <h2 class="mt-3 text-center">Login Account</h2>
+                        <p class="text-center">Get started Chat with your freinds</p>
+                        <p class="text-center">
+                            <span class="btn btn-primary btn-facebook b" id="btnLoginWithFb"> <i class="fab fa-facebook-f"></i>   Login with facebook</span>
+                        </p>
+                        <p class="divider-text">
+                            <span class="bg-light">OR</span>
+                        </p>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <input id="txtLoginEmail" class="form-control" placeholder="name@email.com" type="email">
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input id="txtLoginPass" class="form-control" placeholder="******" type="password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="button" id="btnLoginWithEmail" class="btn btn-appColor btn-block"> Login With Email  </button>
+                        </div>
+                        <p class="text-center askMesg">If you have no account ? <span id="showSignUpForm">Register here</span></p>      
+                    </form>
+            </div>
+        </div> 
+                
+        <script src="./pages/Index/index.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+        <script src="./bootstrap/jQuery/jquery-3.3.1.slim.min.js"></script>
+        <script src="./firebase/auth.js"></script>        
+
+</body>
+</html>
