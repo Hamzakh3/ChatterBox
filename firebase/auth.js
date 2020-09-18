@@ -82,7 +82,7 @@ let signUpWithEmail = (user, pass) => {
     let userId = res.user.uid
     let userProfile = user
     userProfile.userId = userId 
-    firebase.database.ref(`users/${userId}`).push(userProfile)
+    firebase.database().ref().child('/users'+userId).push(userProfile)
       .then(res =>{
         console.log(res)
       }).catch(error => {
@@ -92,7 +92,7 @@ let signUpWithEmail = (user, pass) => {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    console.log(errorMessage)
+    console.log(errorMessage, errorCode)
   });
 }
 

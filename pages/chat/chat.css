@@ -1,0 +1,102 @@
+.navbaar{
+    color: #12787e !important;
+    border-bottom: 3px solid #12787e;
+    box-shadow: 2px 3px 3px rgb(141, 140, 140);
+    background-color: #ffffff;
+}
+.logo{
+    margin: 3px 20px;
+}
+.navbaar ul{
+    border: 1px solid black;
+    margin: auto 10px auto auto;
+    padding: 0px;
+
+}
+.navbaar li{
+    display: inline-block !important;
+    padding: 0px 5px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.chatBg{
+    background-color: white;
+    margin-top: 69px;
+    padding: 10px;
+}
+.chatArea{
+    background-color: rgb(253, 253, 253);
+    border: 1px solid #12787e;
+    border-radius: 5px;
+}
+.userImage{
+    border-radius: 50%;
+    border: 1px solid rgb(7, 163, 7);
+}
+.chatHeader{
+    color: rgb(7, 163, 7);
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    border-bottom: 1px solid grey;
+}
+.chatting{
+    margin: 5px auto;
+}
+.chatting ul{
+    list-style: none;
+    padding: 0px;
+}
+.chatSnip{
+    /* border: 1px solid grey; */
+    padding: 6px 9px;
+    border-radius: 10px;
+    font-size: 14px;
+    min-width: 10%;
+    max-width: 55%;
+    display: inline-block;
+    line-height:1.3em;
+    /* margin:0px !important; */
+}
+.chatSnip:hover{
+    cursor: default;
+}
+.me, .frnd{
+    width: 100% !important;
+}
+.me{
+    text-align: right;
+}
+.meBg{
+    background-color: rgb(231, 231, 231);
+}
+.frndBg{
+background-color: rgb(196, 255, 188);
+}
+.frnd{
+    text-align: left;
+}
+.time{
+    font-size: 9px;
+    color: rgb(121, 121, 121);
+    padding: 2px 4px;
+    display: inline-block;
+}
+.typeMessage{
+    color: rgb(17, 17, 17) !important;
+    width: 85%;
+    text-align: left !important;
+}
+.btnSend{
+    width: 13%;
+
+}
+.typeMessage:hover{
+    background-color: transparent !important;
+    border:1px solid rgb(9, 206, 58) !important;
+    cursor: text !important;
+    color: rgb(17, 17, 17) !important;
+}
+
