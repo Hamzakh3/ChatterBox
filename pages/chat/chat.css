@@ -4,6 +4,9 @@
     box-shadow: 2px 3px 3px rgb(141, 140, 140);
     background-color: #ffffff;
 }
+.navigation{
+    margin-right: auto;
+}
 .logo{
     margin: 3px 20px;
 }
@@ -35,7 +38,7 @@
     border: 1px solid rgb(7, 163, 7);
 }
 .chatHeader{
-    color: rgb(7, 163, 7);
+    color: rgb(7, 163, 7); 
     padding: 5px;
     font-size: 18px;
     font-weight: 500;
@@ -44,6 +47,8 @@
 }
 .chatting{
     margin: 5px auto;
+    max-height: 70vh;
+    overflow-x: scroll;
 }
 .chatting ul{
     list-style: none;
@@ -54,11 +59,10 @@
     padding: 6px 9px;
     border-radius: 10px;
     font-size: 14px;
-    min-width: 10%;
+    min-width: 2%;
     max-width: 55%;
     display: inline-block;
     line-height:1.3em;
-    /* margin:0px !important; */
 }
 .chatSnip:hover{
     cursor: default;
@@ -71,9 +75,11 @@
 }
 .meBg{
     background-color: rgb(231, 231, 231);
+    border-radius: 10px 0px 10px 0px;
 }
 .frndBg{
-background-color: rgb(196, 255, 188);
+    background-color: rgb(196, 255, 188);
+    border-radius: 0px 10px 0px 10px;
 }
 .frnd{
     text-align: left;
@@ -81,22 +87,29 @@ background-color: rgb(196, 255, 188);
 .time{
     font-size: 9px;
     color: rgb(121, 121, 121);
-    padding: 2px 4px;
+    padding: 2px 0px 2px 32px;
     display: inline-block;
 }
 .typeMessage{
     color: rgb(17, 17, 17) !important;
-    width: 85%;
+    width: 80%;
     text-align: left !important;
 }
 .btnSend{
-    width: 13%;
+    width: 18%;
 
 }
-.typeMessage:hover{
+.typeMessage:hover,
+.typeMessage:active{
     background-color: transparent !important;
     border:1px solid rgb(9, 206, 58) !important;
     cursor: text !important;
     color: rgb(17, 17, 17) !important;
 }
+.typingArea{
+    margin: 10px auto;
+}
 
+::-webkit-scrollbar{
+    display: none;    
+}
