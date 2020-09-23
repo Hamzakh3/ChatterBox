@@ -31,6 +31,7 @@ firebase.initializeApp(firebaseConfig);
     firebase.auth().signInWithEmailAndPassword(email, pass)
       .then(res => {
         console.log(res.user.uid)
+        window.location.replace(`./pages/chat/chat.html`)
       }).catch(error => {
       // Handle Errors here.
       var errorCode = error.code;
@@ -65,26 +66,28 @@ loginFb.addEventListener('click',()=>{
     let email=document.getElementById('txtEmail').value;
     let pass=document.getElementById('txtPass').value;
     let rePass=document.getElementById('txtRePass').value;
-    let image=document.getElementById('imgProfile').files[0]
+    let image=document.getElementById('imgProfile').files[0].name
 
-    console.log('Successful')
 
     let newUser = {
       fullName,
       email,
       image
     }
+    console.log('Successful', newUser.image)
+
     signUpWithEmail(newUser, pass)
   })
 
 let signUpWithEmail = (user, pass) => {
   firebase.auth().createUserWithEmailAndPassword(user.email, pass).then(res => {
     let userId = res.user.uid
+    user.userId = userId 
     let userProfile = user
-    userProfile.userId = userId 
-    firebase.database().ref().child('/users'+userId).push(userProfile)
+    let database = firebase.database()
+    database.ref(`users/${userId}`).set(userProfile)
       .then(res =>{
-        console.log(res)
+        console.log('success', res)
       }).catch(error => {
         console.log(error.message)
       })

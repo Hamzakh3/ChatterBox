@@ -6,20 +6,29 @@
     <title>Message</title>
     <link rel="icon" href="../../icons/icon.png">
     <link rel="stylesheet" href="./chat.css">
-    <link rel="stylesheet" href="./pages/Index/index.css">
-    <link rel="stylesheet" href="../pages/style.css">
+    <!-- <link rel="stylesheet" href="../Index/index.css"> -->
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
     
 </head>
 <body>
     <nav class="nav navbaar fixed-top">
-        <a href='../../index.html' class="navbar-brand logo"><img src="../../icons/logo.png" width="90" alt="Logo"></a>
-        <ul class="navigation">
-            <li><a><span class="fa fa-envelope-square"></span> Messages</a></li>
-            <li><a><span class="fa fa-users"></span> Freinds</a></li>
-            <li><a><span class="fa fa-user-circle"></span> Profile</a></li>
-        </ul>
+        <!-- <div class="row"> -->
+            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                <a href='../../index.html' class="navbar-brand logo"><img src="../../icons/logo.png" width="25%" alt="Logo"></a>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+                <ul class="navigation">
+                    <li><a><span class="fa fa-envelope-square"></span> Messages</a></li>
+                    <li><b>|</b></li>
+                    <li><a><span class="fa fa-users"></span> Freinds</a></li>
+                    <li><b>|</b></li>
+                    <li><a><span class="fa fa-user-circle"></span> Profile</a></li>
+                </ul>
+            </div>
+        <!-- </div> -->
     </nav>
     <div class='chatBg'>
         <div class="container chatArea">
@@ -129,7 +138,7 @@
             </div>
             <div class="typingArea">
                 <div>
-                    <button class="btn btn-outline-success btn-sm btnSend">Send <span class="fa fa-paper-plane"></span></button>
+                    <button class="btn btn-outline-success btn-sm btnSend">Send</button>
                     <input class="btn btn-sm btn-outline-success typeMessage" type="text" name="typeMessage" id="typeMessage">
                 </div>
                 <div>
@@ -138,7 +147,7 @@
         </div>   
     </div>
 
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
-    <script src="./bootstrap/jQuery/jquery-3.3.1.slim.min.js"></script>
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../bootstrap/jQuery/jquery-3.3.1.slim.min.js"></script>
 </body>
 </html>

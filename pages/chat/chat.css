@@ -1,36 +1,54 @@
+body{
+    background-image: linear-gradient(to left, rgb(108, 204, 108), rgb(195, 252, 157),rgb(192, 251, 212)) !important;
+
+}
 .navbaar{
     color: #12787e !important;
     border-bottom: 3px solid #12787e;
     box-shadow: 2px 3px 3px rgb(141, 140, 140);
     background-color: #ffffff;
+    /* place-content: center center; */
+    text-align: center;
+
 }
 .navigation{
-    margin-right: auto;
+
 }
 .logo{
-    margin: 3px 20px;
+    margin: 1px 0px;
 }
 .navbaar ul{
-    border: 1px solid black;
-    margin: auto 10px auto auto;
-    padding: 0px;
-
+    /* border: 1px solid black; */
+    margin: 10px auto 2px auto ;
+    padding: 0px !important;
 }
 .navbaar li{
     display: inline-block !important;
-    padding: 0px 5px;
+    margin: 0px;
+    padding: 5px 10px;
+    list-style: none;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+@media screen and (max-width: 680px) {
+    .navbaar li{
+        padding: 2px;
+    }
+    .navbaar ul{
+    margin: 2px auto 2px auto ;
+
+    }
+  }
 .chatBg{
-    background-color: white;
-    margin-top: 69px;
+    /* background-color: white; */
+    margin-top: 14vh;
     padding: 10px;
+    display: grid !important;
 }
 .chatArea{
     background-color: rgb(253, 253, 253);
-    border: 1px solid #12787e;
+    /* border: 1px solid #12787e; */
     border-radius: 5px;
 }
 .userImage{
@@ -47,10 +65,13 @@
 }
 .chatting{
     margin: 5px auto;
-    max-height: 70vh;
+    max-height: 65vh;
     overflow-x: scroll;
+    /* overflow-y: hidden; */
 }
 .chatting ul{
+    display: flex;
+    flex-direction: column;
     list-style: none;
     padding: 0px;
 }
@@ -68,7 +89,13 @@
     cursor: default;
 }
 .me, .frnd{
-    width: 100% !important;
+    /* width: 100% !important; */
+    flex:0 0 auto;
+    /* border: 1px solid black; */
+}
+.navigation li:hover{
+    background-color: rgb(196, 255, 188);
+    cursor: pointer;
 }
 .me{
     text-align: right;
@@ -97,7 +124,6 @@
 }
 .btnSend{
     width: 18%;
-
 }
 .typeMessage:hover,
 .typeMessage:active{
@@ -107,7 +133,7 @@
     color: rgb(17, 17, 17) !important;
 }
 .typingArea{
-    margin: 10px auto;
+    margin: 5px auto 10px auto;
 }
 
 ::-webkit-scrollbar{
