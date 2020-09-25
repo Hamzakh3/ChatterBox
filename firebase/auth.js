@@ -71,21 +71,27 @@ loginFb.addEventListener('click',()=>{
 
     let newUser = {
       fullName,
-      email,
-      image
+      email
     }
-    console.log('Successful', newUser.image)
+    console.log('Successful')
 
-    signUpWithEmail(newUser, pass)
+    signUpWithEmail(newUser, pass, image)
   })
 
-let signUpWithEmail = (user, pass) => {
-  firebase.auth().createUserWithEmailAndPassword(user.email, pass).then(res => {
+let signUpWithEmail = (user, pass, img) => {
+  firebase.auth().createUserWithEmailAndPassword(user.email, pass)
+  .then(res => {
     let userId = res.user.uid
-    user.userId = userId 
-    let userProfile = user
-    let database = firebase.database()
-    database.ref(`users/${userId}`).set(userProfile)
+    user.userId = userId
+    let storageRef = firebase.storage().ref().child(`profile/${img.name}`)
+    storageRef.put(img)
+    .then(url => {
+      url.ref.getDownloadURL()
+      .then(urlRef => {
+        user.profile = urlRef
+
+        let database = firebase.database()
+        database.ref(`users/${userId}`).set(userProfile)
       .then(res =>{
         console.log('success', res)
       }).catch(error => {
@@ -97,6 +103,10 @@ let signUpWithEmail = (user, pass) => {
     var errorMessage = error.message;
     console.log(errorMessage, errorCode)
   });
+      })
+    })
+
+    
 }
 
 
