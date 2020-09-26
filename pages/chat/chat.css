@@ -1,5 +1,5 @@
 body{
-    background-image: linear-gradient(to left, rgb(108, 204, 108), rgb(195, 252, 157),rgb(192, 251, 212)) !important;
+    background-image: linear-gradient(to left, #12797ec2,#12797ec2 ) !important;
 
 }
 .navbaar{
@@ -42,17 +42,19 @@ body{
   }
 .chatBg{
     /* background-color: white; */
-    margin-top: 14vh;
+    /* margin-top: 14vh; */
     padding: 10px;
-    display: grid !important;
+    display: flex !important;
+    flex-direction: column-reverse !important;
 }
 .chatArea{
+    /* flex-direction: column; */
+    justify-content: center !important;
     background-color: rgb(253, 253, 253);
-    /* border: 1px solid #12787e; */
     border-radius: 5px;
 }
 .userImage{
-    border-radius: 50%;
+    border-radius: 100%;
     border: 1px solid rgb(7, 163, 7);
 }
 .chatHeader{
@@ -65,7 +67,7 @@ body{
 }
 .chatting{
     margin: 5px auto;
-    max-height: 65vh;
+    height: 64vh;
     overflow-x: scroll;
     /* overflow-y: hidden; */
 }
@@ -82,7 +84,7 @@ body{
     font-size: 14px;
     min-width: 2%;
     max-width: 55%;
-    display: inline-block;
+    /* display: inline-block; */
     line-height:1.3em;
 }
 .chatSnip:hover{
@@ -90,7 +92,8 @@ body{
 }
 .me, .frnd{
     /* width: 100% !important; */
-    flex:0 0 auto;
+    align-items: flex-end;
+    /* margin-top: auto; */
     /* border: 1px solid black; */
 }
 .navigation li:hover{
@@ -121,19 +124,41 @@ body{
     color: rgb(17, 17, 17) !important;
     width: 80%;
     text-align: left !important;
-}
-.btnSend{
-    width: 18%;
+    border:1px solid #12797e !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0px !important;
 }
 .typeMessage:hover,
 .typeMessage:active{
     background-color: transparent !important;
-    border:1px solid rgb(9, 206, 58) !important;
+    border:2px solid #12797e !important;
     cursor: text !important;
-    color: rgb(17, 17, 17) !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0px !important;
 }
+
+.btnSend{
+    width: 18%;
+    color:#12797e !important;
+    border-color: #12797e !important;
+}
+.btnSend:hover,
+.btnSend:active{
+    box-shadow: none !important;
+    background-color: #12797e !important;
+    color: whitesmoke !important;
+}
+
 .typingArea{
     margin: 5px auto 10px auto;
+    border: 1px solid grey;
+    padding: 5px 5px;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar{

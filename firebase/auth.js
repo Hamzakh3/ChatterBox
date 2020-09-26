@@ -66,7 +66,7 @@ loginFb.addEventListener('click',()=>{
     let email=document.getElementById('txtEmail').value;
     let pass=document.getElementById('txtPass').value;
     let rePass=document.getElementById('txtRePass').value;
-    let image=document.getElementById('imgProfile').files[0].name
+    let image=document.getElementById('imgProfile').files[0]
 
 
     let newUser = {
@@ -91,18 +91,44 @@ let signUpWithEmail = (user, pass, img) => {
         user.profile = urlRef
 
         let database = firebase.database()
-        database.ref(`users/${userId}`).set(userProfile)
+        database.ref(`users/${userId}`).set(user)
       .then(res =>{
-        console.log('success', res)
+        // console.log('success', res)
+        swal({
+          title: "User Created Successfuly",
+          text: "Press Continue for Next",
+          icon: "success",
+          button: "Continue"
+        }).then(()=>{
+          window.location.replace(`./pages/chat/chat.html`)
+        })
       }).catch(error => {
-        console.log(error.message)
+        // console.log(error.message)
+        swal({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+          button: "Ok"
+        })
       })
     }).catch(function(error) {
     // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(errorMessage, errorCode)
+    // console.log(errorMessage, errorCode)
+    swal({
+      title: "Error",
+      text: error.message,
+      icon: "error",
+      button: "Ok"
+    })
   });
+      }).catch(error => {
+        // console.log(error.message)
+        swal({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+          button: "Ok"
+        })
       })
     })
 

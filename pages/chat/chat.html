@@ -10,11 +10,16 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     
 </head>
 <body>
-    <nav class="nav navbaar fixed-top">
+    <nav class="nav navbaar">
         <!-- <div class="row"> -->
             <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                 <a href='../../index.html' class="navbar-brand logo"><img src="../../icons/logo.png" width="25%" alt="Logo"></a>
@@ -39,106 +44,18 @@
                 </span>
             </div>
             <div class="chatting">
-                <ul>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
+                <ul class="chatList" id="chatList">
+                    <li class="me" id="me">
+                        <!-- <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User"> -->
+                        <span class="chatSnip meBg">
                             Hello
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="me" id="me">
-                        <!-- <img class="userImage" src="../../Hamza.jpg" width="25" height="25" alt="User"> -->
-                        <span class="chatSnip meBg">
-                            Hi How are you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            I am fine, and what about you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            Hello
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="me" id="me">
-                        <!-- <img class="userImage" src="../../Hamza.jpg" width="25" height="25" alt="User"> -->
-                        <span class="chatSnip meBg">
-                            Hi How are you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            I am fine, and what about you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            Hello
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="me" id="me">
-                        <!-- <img class="userImage" src="../../Hamza.jpg" width="25" height="25" alt="User"> -->
-                        <span class="chatSnip meBg">
-                            Hi How are you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            I am fine, and what about you
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="me" id="me">
-                        <!-- <img class="userImage" src="../../Hamza.jpg" width="25" height="25" alt="User"> -->
-                        <span class="chatSnip meBg">
-                            I am also good too
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            Tell me what plan for today
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            I will come at your home, then we will start journey.
-                            I will come at your home, then we will start journey.
-                            I will come at your home, then we will start journey.
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="me" id="me">
-                        <!-- <img class="userImage" src="../../Hamza.jpg" width="25" height="25" alt="User"> -->
-                        <span class="chatSnip meBg">
-                            I am also good too
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            Tell me what plan for today
-                        </span><br /><sup class="time">8:18 PM</sup>
-                    </li>
-                    <li class="frnd" id="frnd">
-                        <img class="userImage" src="../../AbbanNawaz.jpg" width="25" height="25" alt="User">
-                        <span class="chatSnip frndBg">
-                            I will come at your home, then we will start journey.
-                            I will come at your home, then we will start journey.
-                            I will come at your home, then we will start journey.
                         </span><br /><sup class="time">8:18 PM</sup>
                     </li>
                 </ul>
             </div>
             <div class="typingArea">
                 <div>
-                    <button class="btn btn-outline-success btn-sm btnSend">Send</button>
+                    <button class="btn btn-outline-success btn-sm btnSend" id="btnSend">Send</button>
                     <input class="btn btn-sm btn-outline-success typeMessage" type="text" name="typeMessage" id="typeMessage">
                 </div>
                 <div>
@@ -149,5 +66,6 @@
 
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
     <script src="../../bootstrap/jQuery/jquery-3.3.1.slim.min.js"></script>
+    <script src="./chat.js"></script>
 </body>
 </html>
