@@ -5,3 +5,6 @@
     background-color: #12787e !important;
     color: white !important;
 }
+.btn-appColor:hover, .btn-appColor:active{
+    background-color: #0a4c50 !important;
+}

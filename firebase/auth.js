@@ -36,7 +36,12 @@ firebase.initializeApp(firebaseConfig);
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorCode)
+      swal({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+        button: "Ok"
+      })
     });
   }
 

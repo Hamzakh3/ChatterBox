@@ -11,9 +11,57 @@ firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+  let chatArea = document.getElementById('chatArea')
+  let ifNoChat = document.getElementById('ifNoChat') 
+  let messages = document.getElementById('messages') 
+  let friends = document.getElementById('friends') 
+  let profile = document.getElementById('profile')
+  
+  let mesgLink = document.getElementById('mesgLink')
+  let frndLink = document.getElementById('frndLink')
+  let profLink = document.getElementById('profLink')
+  let startConv = document.getElementById('startConv')
+
+  mesgLink.addEventListener('click', e => {
+    console.log('Messages')
+    chatArea.style.display = 'none'
+    ifNoChat.style.display = 'none'
+    friends.style.display = 'none'
+    profile.style.display = 'none'
+    messages.style.display = 'flex'
+
+  })
+
+  frndLink.addEventListener('click', e => {
+    console.log('Friend')
+    chatArea.style.display = 'none'
+    ifNoChat.style.display = 'none'
+    messages.style.display = 'none'
+    profile.style.display = 'none'
+    friends.style.display = 'flex'
+  })
+
+  profLink.addEventListener('click', e => {
+    console.log('Profile')
+    chatArea.style.display = 'none'
+    ifNoChat.style.display = 'none'
+    messages.style.display = 'none'
+    friends.style.display = 'none'
+    profile.style.display = 'flex'
+  })
+
+  startConv.addEventListener('click', w => {
+    chatArea.style.display = 'none'
+    ifNoChat.style.display = 'none'
+    messages.style.display = 'none'
+    profile.style.display = 'none'
+    friends.style.display = 'flex'
+  })
+
+
+  //------------------CHATAREA START------------------
   let btnSend = document.getElementById('btnSend')
   let chatList = document.getElementById('chatList')
-//   let typeMessage = document.getElementById('typeMessage')
 
   btnSend.addEventListener("click", () => {
   let typeMessage = document.getElementById('typeMessage')
@@ -27,3 +75,24 @@ firebaseConfig = {
     </li>` 
 
   })
+  //------------------CHATAREA END------------------
+
+  //------------------ifNoChat START------------------
+
+  //------------------ifNoChat END------------------
+
+  //------------------messages START------------------
+  //------------------messages END------------------
+
+  //------------------friends START------------------
+  let frnd = document.getElementById('frnd')
+
+  frnd.addEventListener('click', e => {
+    console.log(e.target)
+  })
+  //------------------friends END------------------
+
+  //------------------profile START------------------
+  //------------------profile END------------------
+
+

@@ -5,7 +5,7 @@ body{
 .navbaar{
     color: #12787e !important;
     border-bottom: 3px solid #12787e;
-    box-shadow: 2px 3px 3px rgb(141, 140, 140);
+    box-shadow: 2px 3px 5px rgb(233, 233, 233);
     background-color: #ffffff;
     /* place-content: center center; */
     text-align: center;
@@ -39,20 +39,88 @@ body{
     margin: 2px auto 2px auto ;
 
     }
+    .chatBg{
+        height: 85vh !important;
+    }
   }
 .chatBg{
     /* background-color: white; */
     /* margin-top: 14vh; */
     padding: 10px;
+    height: 90vh;
     display: flex !important;
-    flex-direction: column-reverse !important;
-}
-.chatArea{
-    /* flex-direction: column; */
+    flex-direction: column !important;
+    align-items: center !important;
     justify-content: center !important;
+}
+.ifNoChat,
+.chatArea,
+.messages,
+.friends,
+.profile{
     background-color: rgb(253, 253, 253);
     border-radius: 5px;
+    text-align: center;
+    color: #0a4c50;
+
+
+
+
 }
+
+.ifNoChat{
+    height: 70vh !important;
+    display: flex;
+    align-items: center !important;
+    justify-content: center   !important;
+    flex-direction: column !important;
+    color: #0a4c50;
+    /* display: none !important; */
+}
+.chatArea{    
+    height: 70vh !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center   !important;
+    flex-direction: column !important;
+}
+.messages{
+    height: 70vh !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center   !important;
+    flex-direction: column !important;
+}
+.friends{
+    height: 70vh !important;
+    display: none;
+    align-items: flex !important;
+    justify-content: flex-start  !important;
+    flex-direction: column !important;
+}
+.profile{
+    height: 70vh !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center   !important;
+    flex-direction: column !important;
+}
+.ifNoChat h2, .ifNoChat h3, .ifNoChat button {
+    padding: 2px 15px;
+    margin:10px auto !important;
+}
+.ifNoChat img{
+margin-bottom:8vh !important;
+}
+.welcomeChat{
+    background-color: rgb(235, 235, 235);
+    margin-left:10px !important;
+    margin-right:10px !important;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+
 .userImage{
     border-radius: 100%;
     border: 1px solid rgb(7, 163, 7);
@@ -67,7 +135,7 @@ body{
 }
 .chatting{
     margin: 5px auto;
-    height: 64vh;
+    height: 60vh;
     overflow-x: scroll;
     /* overflow-y: hidden; */
 }
@@ -96,9 +164,10 @@ body{
     /* margin-top: auto; */
     /* border: 1px solid black; */
 }
-.navigation li:hover{
-    background-color: rgb(196, 255, 188);
+.items:hover{
+    background-color: rgb(240, 240, 240);
     cursor: pointer;
+    border-radius: 5px 0px 5px 0px;
 }
 .me{
     text-align: right;
@@ -121,31 +190,27 @@ body{
     display: inline-block;
 }
 .typeMessage{
+    background-color: rgb(238, 238, 238) !important;
     color: rgb(17, 17, 17) !important;
-    width: 80%;
     text-align: left !important;
-    border:1px solid #12797e !important;
-    border-top: none !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-radius: 0px !important;
+    box-shadow: none !important;
+    border-radius: 5px 0px 0px 5px !important;
+    border:none !important;
+    padding: 10px 10px !important;
 }
 .typeMessage:hover,
 .typeMessage:active{
-    background-color: transparent !important;
-    border:2px solid #12797e !important;
     cursor: text !important;
     box-shadow: none !important;
-    border-top: none !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-radius: 0px !important;
+    background-color: rgb(233, 233, 233) !important;
 }
 
 .btnSend{
-    width: 18%;
-    color:#12797e !important;
-    border-color: #12797e !important;
+    border-radius: 0px 5px 5px 0px !important;
+    border: none !important;
+    background-color:#12797e !important;
+    color: whitesmoke !important;
+    padding: 10px!important;
 }
 .btnSend:hover,
 .btnSend:active{
@@ -155,12 +220,57 @@ body{
 }
 
 .typingArea{
+    display: flex;
     margin: 5px auto 10px auto;
-    border: 1px solid grey;
-    padding: 5px 5px;
-    border-radius: 5px;
 }
+.typingArea input[type="text"]{
+    flex:1 1 auto
+}
+/* - - - - -  Friends List - - - - - -  */
+.frndsList{
+    /* list-style: none; */
+    padding: 0px;
+    height: 70vh;
+    scroll-behavior: smooth;
+    overflow: scroll;
+}
+.frndsList li{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 8px 0px 8px;
+    margin: 1px;
 
+}
+.frndsList li:hover, .frndsList li:active{
+    background-color: rgb(233, 233, 233);
+    cursor: pointer;
+    border-radius: 10px 5px;
+}
+.searchFrnd{
+    background-image: url('../../icons/search.jpg');
+    background-repeat: no-repeat;
+    background-position:center left;
+    background-position-x: 5px;
+    padding: 5px 30px !important;
+    background-size:20px;
+    box-shadow: none !important;
+}
+.userName{
+    font-weight: bold;
+}
+.mesgIcon{
+    font-size: 22px !important;
+}
+.lastMessage{
+    color: rgb(66, 66, 66);
+}
+.user-images{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
 ::-webkit-scrollbar{
     display: none;    
 }
