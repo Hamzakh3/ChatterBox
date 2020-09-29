@@ -70,7 +70,7 @@ body{
 
 .ifNoChat{
     height: 70vh !important;
-    display: flex;
+    display: none;
     align-items: center !important;
     justify-content: center   !important;
     flex-direction: column !important;
@@ -93,7 +93,7 @@ body{
 }
 .friends{
     height: 70vh !important;
-    display: none;
+    display: flex;
     align-items: flex !important;
     justify-content: flex-start  !important;
     flex-direction: column !important;
@@ -238,9 +238,9 @@ margin-bottom:8vh !important;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    align-items: center;
-    padding: 14px 8px 0px 8px;
-    margin: 1px;
+    /* align-items: center; */
+    padding: 4px 10px !important;
+    margin: 2px;
 
 }
 .frndsList li:hover, .frndsList li:active{
@@ -259,9 +259,11 @@ margin-bottom:8vh !important;
 }
 .userName{
     font-weight: bold;
+    margin: 0px;
 }
 .mesgIcon{
     font-size: 22px !important;
+    margin: auto 0px;
 }
 .lastMessage{
     color: rgb(66, 66, 66);
@@ -274,3 +276,28 @@ margin-bottom:8vh !important;
 ::-webkit-scrollbar{
     display: none;    
 }
+
+.loader {
+    /* display: block !important; */
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #159299;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+    display: none;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+

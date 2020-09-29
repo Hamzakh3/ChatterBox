@@ -11,6 +11,15 @@ firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+window.addEventListener('load', () => {
+  if(localStorage.hasOwnProperty('uId')){
+    localStorage.setItem('uId', null)
+  }
+  else{
+    localStorage.setItem('uId', null)
+  }
+})
+
   let loginEmail=document.getElementById('btnLoginWithEmail');
   let loginFb=document.getElementById('btnLoginWithFb');
   let signUpEmail=document.getElementById('btnSignUpWithEmail');
@@ -18,6 +27,8 @@ firebase.initializeApp(firebaseConfig);
 //- - - - - - - - - - Sign In With Email
   // let e=document.getElementById('txtLoginEmail');
   // let p=document.getElementById('txtLoginPass');
+
+  
 
   loginEmail.addEventListener('click',()=>{
     let e=document.getElementById('txtLoginEmail').value;
@@ -31,6 +42,7 @@ firebase.initializeApp(firebaseConfig);
     firebase.auth().signInWithEmailAndPassword(email, pass)
       .then(res => {
         console.log(res.user.uid)
+        localStorage.setItem('uId', res.user.uid)
         window.location.replace(`./pages/chat/chat.html`)
       }).catch(error => {
       // Handle Errors here.

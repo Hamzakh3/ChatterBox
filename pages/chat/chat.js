@@ -10,6 +10,24 @@ firebaseConfig = {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  let currentUid = localStorage.getItem('uId')
+
+    window.addEventListener('load', () => {
+    if(!localStorage.hasOwnProperty('uId')){
+      console.log('not exist')
+      window.location.replace('../../index.html')
+    }
+    else if(currentUid === null || currentUid.length <= 20){
+      window.location.replace('../../index.html')
+    }
+  })
+
+  let db = firebase.database()
+  let loader = document.getElementById('loader')
+
+  
+
+
 
   let chatArea = document.getElementById('chatArea')
   let ifNoChat = document.getElementById('ifNoChat') 
@@ -33,12 +51,14 @@ firebaseConfig = {
   })
 
   frndLink.addEventListener('click', e => {
-    console.log('Friend')
     chatArea.style.display = 'none'
     ifNoChat.style.display = 'none'
     messages.style.display = 'none'
     profile.style.display = 'none'
+
     friends.style.display = 'flex'
+
+    showFriendsList()
   })
 
   profLink.addEventListener('click', e => {
@@ -86,13 +106,50 @@ firebaseConfig = {
 
   //------------------friends START------------------
   let frnd = document.getElementById('frnd')
-
-  frnd.addEventListener('click', e => {
-    console.log(e.target)
-  })
+  let frndsList = document.getElementById('frndsList')
+  let showFriendsList =() => {
+    console.log('Friends List')
+    loader.style.display = 'block'
+    db.ref(`users`).once('value', snapshot => {
+      let data = snapshot.val()
+      console.log(data)
+      frndsList.innerHTML = ``
+      setTimeout(()=>{
+        loader.style.display = 'none'
+        renderFrndList(data)
+      },1000)
+    })
+  }
+  let renderFrndList = (list) => {
+    if(list){
+      for(let key in list){
+        let user = list[key]
+        console.log(user.fullName)
+        frndsList.innerHTML += `
+        <li class="frnd" id="frnd" onclick="testing(this)">
+          <p class="userName" id="userName">
+            <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
+            ${user.fullName}
+          </p>
+          <p class="fa fa-comments mesgIcon" id="mesgIcon"></p>
+        </li>
+        `
+    }  
+  }
+  else{
+    frndsList.innerHTML += `
+        <li class="frnd" id="frnd" onclick="testing(this)">
+          You have no Friends
+        </li>
+        `
+  }
+}
+  
+  let testing = e => {
+    console.log(e.id)
+  }
   //------------------friends END------------------
 
   //------------------profile START------------------
   //------------------profile END------------------
-
 
