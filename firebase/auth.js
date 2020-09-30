@@ -82,7 +82,7 @@ loginFb.addEventListener('click',()=>{
     let fullName=document.getElementById('txtFullName').value;
     let email=document.getElementById('txtEmail').value;
     let pass=document.getElementById('txtPass').value;
-    let rePass=document.getElementById('txtRePass').value;
+    // let rePass=document.getElementById('txtRePass').value;
     let image=document.getElementById('imgProfile').files[0]
 
 
@@ -99,6 +99,7 @@ let signUpWithEmail = (user, pass, img) => {
   firebase.auth().createUserWithEmailAndPassword(user.email, pass)
   .then(res => {
     let userId = res.user.uid
+    localStorage.setItem('uId', userId)
     user.userId = userId
     let storageRef = firebase.storage().ref().child(`profile/${img.name}`)
     storageRef.put(img)

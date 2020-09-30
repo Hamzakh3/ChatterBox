@@ -11,19 +11,24 @@ firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   let currentUid = localStorage.getItem('uId')
-
-    window.addEventListener('load', () => {
-    if(!localStorage.hasOwnProperty('uId')){
-      console.log('not exist')
-      window.location.replace('../../index.html')
-    }
-    else if(currentUid === null || currentUid.length <= 20){
-      window.location.replace('../../index.html')
-    }
-  })
-
   let db = firebase.database()
   let loader = document.getElementById('loader')
+  let mainLoader = document.getElementById('mainLoader')
+
+
+
+  window.addEventListener('load', () => {
+    if(!localStorage.hasOwnProperty('uId')){
+        // console.log('not exist')
+         window.location.replace('../../index.html')
+      }
+      else if(currentUid === null || currentUid.length <= 20){
+        window.location.replace('../../index.html')
+      }
+  })
+
+
+
 
   
 
@@ -105,15 +110,20 @@ firebaseConfig = {
   //------------------messages END------------------
 
   //------------------friends START------------------
+
   let frnd = document.getElementById('frnd')
   let frndsList = document.getElementById('frndsList')
+  let mesgIcon;
+  let userName
   let showFriendsList =() => {
-    console.log('Friends List')
+    frndsList.innerHTML = ``
     loader.style.display = 'block'
+    console.log('Friends List')
     db.ref(`users`).once('value', snapshot => {
       let data = snapshot.val()
       console.log(data)
-      frndsList.innerHTML = ``
+      
+
       setTimeout(()=>{
         loader.style.display = 'none'
         renderFrndList(data)
@@ -124,16 +134,34 @@ firebaseConfig = {
     if(list){
       for(let key in list){
         let user = list[key]
+        if(user.userId === currentUid){
+          continue;
+        }
         console.log(user.fullName)
         frndsList.innerHTML += `
-        <li class="frnd" id="frnd" onclick="testing(this)">
-          <p class="userName" id="userName">
+        <!-- onclick="testing(this) -->
+        <li class="frnd" id="frnd" ">
+          <p class="userName" id="userName" onclick='userNameClick(this)'>
             <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
             ${user.fullName}
           </p>
-          <p class="fa fa-comments mesgIcon" id="mesgIcon"></p>
+          <p class="mesgIcon" id="mesgIcon" onclick='mesgIconClick(this)'>
+            Message <span class="fa fa-comments"></span>
+          </p>
         </li>
+
         `
+        mesgIcon = document.getElementById('mesgIcon')
+        userName = document.getElementById('userName')
+
+        //   let mesgIconClick = (e) => {
+        //     console.log('Click on Message')
+        //   }
+          
+          
+        //  let userNameClick = (e) => {
+        //   console.log('Click on Message')
+        //  }
     }  
   }
   else{
@@ -143,7 +171,10 @@ firebaseConfig = {
         </li>
         `
   }
+
 }
+
+
   
   let testing = e => {
     console.log(e.id)
@@ -152,4 +183,29 @@ firebaseConfig = {
 
   //------------------profile START------------------
   //------------------profile END------------------
+
+  //------------------sign out START------------------
+  let signOutLink = document.getElementById('signOutLink')
+
+  signOutLink.addEventListener('click', e => {
+    console.log('Sign out')
+    signOut()
+  })
+  let signOut = () => {
+    firebase.auth().signOut()
+    .then((s)=>{
+      console.log(s)
+      localStorage.setItem('uId', null)
+      window.location.replace('../../index.html')
+    }).catch(err => {
+      swal({
+        title: 'Something Wrong',
+        text: err.messages,
+        icon: 'error',
+        button: 'Ok'
+      })
+    })
+  }
+  //------------------sign out START------------------
+  
 
