@@ -288,7 +288,7 @@ margin-bottom:8vh !important;
 }
 .mesgIcon:hover, .mesgIcon:active{
     color: #12797e;
-    background-color:  whitesmoke;
+    background-color:  rgb(235, 235, 235);
     border: 1px solid #12797e;
     cursor: pointer;
     
@@ -300,6 +300,11 @@ margin-bottom:8vh !important;
     border-radius: 50%;
     width: 35px;
     height: 35px;
+}
+.user-images-popup{
+    border-radius: 50%;
+    width: 85px;
+    height: 85px;
 }
 ::-webkit-scrollbar{
     display: none;    

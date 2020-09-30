@@ -87,17 +87,53 @@ firebaseConfig = {
   //------------------CHATAREA START------------------
   let btnSend = document.getElementById('btnSend')
   let chatList = document.getElementById('chatList')
+  let chatHeader = document.getElementById('chatHeader')
+  let oppositeUser;
+
+  let showChatArea = (user) => {
+    ifNoChat.style.display = 'none'
+    messages.style.display = 'none'
+    profile.style.display = 'none'
+    friends.style.display = 'none'
+    chatArea.style.display = 'flex'
+    oppositeUser = user
+    chatHeader.innerHTML = `
+    <span>
+      <img class="userImage" src="${user.profile}" width="35" height="35" alt="${user.fullName}">
+      ${user.fullName}
+    </span>
+    `
+  }
 
   btnSend.addEventListener("click", () => {
   let typeMessage = document.getElementById('typeMessage')
-    console.log(typeMessage.value)
-    // console.log(chatList)
-    chatList.innerHTML = chatList.innerHTML + `
-    <li class="me" id="me">
-        <span class="chatSnip meBg">
-            ${typeMessage.value}
-        </span><br /><sup class="time">8:18 PM</sup>
-    </li>` 
+  console.log(typeMessage.value)
+  let mesgObj = {
+    text : typeMessage.value,
+    textTime : firebase.database.ServerValue.TIMESTAMP,
+    userId : currentUid
+    }
+    db.ref(`chats/${oppositeUser.userId+currentUid}/`).push(mesgObj)
+    .then(()=>{
+      db.ref(`chats/${oppositeUser.userId+currentUid}/`).once('value', mesges => {
+        let data = mesges.val()
+        chatList.innerHTML = chatList.innerHTML + `
+        <li class="me" id="me">
+          <span class="chatSnip meBg">
+              ${data.text}
+          </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
+        </li>`
+      }).then(()=>{ 
+        
+      }).catch((er)=>{
+        console.log(er.message)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    // console.log(typeMessage.value)
+    // // console.log(chatList)
+     
 
   })
   //------------------CHATAREA END------------------
@@ -140,12 +176,12 @@ firebaseConfig = {
         console.log(user.fullName)
         frndsList.innerHTML += `
         <!-- onclick="testing(this) -->
-        <li class="frnd" id="frnd" ">
-          <p class="userName" id="userName" onclick='userNameClick(this)'>
+        <li class="frnd" id="frnd"      >
+          <p class="userName" id="userName" onclick="userNameClick(this, '${user.userId}')">
             <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
             ${user.fullName}
           </p>
-          <p class="mesgIcon" id="mesgIcon" onclick='mesgIconClick(this)'>
+          <p class="mesgIcon" id="mesgIcon" key="${user.userId}" onclick="mesgIconClick(this,'${user.userId}')">
             Message <span class="fa fa-comments"></span>
           </p>
         </li>
@@ -154,26 +190,70 @@ firebaseConfig = {
         mesgIcon = document.getElementById('mesgIcon')
         userName = document.getElementById('userName')
 
-        //   let mesgIconClick = (e) => {
-        //     console.log('Click on Message')
-        //   }
-          
-          
-        //  let userNameClick = (e) => {
-        //   console.log('Click on Message')
-        //  }
+        
     }  
   }
   else{
     frndsList.innerHTML += `
-        <li class="frnd" id="frnd" onclick="testing(this)">
+        <li class="frnd" id="frnd">
           You have no Friends
         </li>
         `
   }
 
 }
-
+  let mesgIconClick = (e, id) => {
+    let selectedUser;
+    db.ref(`users/${id}`).once('value', snapshot => {
+      let data = snapshot.val()
+      selectedUser = data
+    }).then(()=>{
+      showChatArea(selectedUser)
+    }).catch((er)=>{
+      swal({
+        title:'Something Wrong',
+        icon: 'error',
+        text:er.message,
+        button:'ok'
+      })
+    })
+  }
+          
+          
+  let userNameClick = (e, id) => {
+    let selectedUser;
+    console.log('Click on userName', id)
+    db.ref(`users/${id}`).once('value', snapshot => {
+      let data = snapshot.val()
+      selectedUser = data
+    }).then(()=>{
+      Swal.fire({
+        text: selectedUser.fullName,
+        imageUrl: selectedUser.profile,
+        imageWidth: 200,
+        imageHeight: 200,
+        imageBorderRadius: 10,
+        imageAlt: 'User Profile Image',
+        showCancelButton: true,
+        confirmButtonColor: '#12797e',
+        cancelButtonColor: '#d3d3d3',
+        confirmButtonText: 'Start Chat'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // console.log('=====>', selectedUser)
+          showChatArea(selectedUser)
+        }
+      })
+    }).catch((er)=>{
+      swal({
+        title:'Something Wrong',
+        icon: 'error',
+        text:er.message,
+        button:'ok'
+      })
+    })
+    
+  }
 
   
   let testing = e => {
