@@ -89,8 +89,8 @@ body{
 .chatArea{    
     height: 70vh !important;
     display: none;
-    align-items: center !important;
-    justify-content: center   !important;
+    /* align-items: center;
+    justify-content: center; */
     flex-direction: column !important;
 }
 .messages{
@@ -146,9 +146,10 @@ margin-bottom:8vh !important;
     border-bottom: 1px solid grey;
 }
 .chatting{
-    margin: 5px auto;
+    margin: 5px 0px;
     height: 60vh;
     overflow-x: scroll;
+    scroll-behavior: smooth;
     /* overflow-y: hidden; */
 }
 .chatting ul{
@@ -233,7 +234,7 @@ margin-bottom:8vh !important;
 
 .typingArea{
     display: flex;
-    margin: 5px auto 10px auto;
+    margin: 5px 0px 10px 0px;
 }
 .typingArea input[type="text"]{
     flex:1 1 auto

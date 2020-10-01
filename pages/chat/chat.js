@@ -103,8 +103,60 @@ firebaseConfig = {
       ${user.fullName}
     </span>
     `
+    
   }
+  let checkNewMessages = ()=>{
+     
+  }
+  db.ref().on('child_added', snap => {
+    let data = snap.val()
+    for(let key in data){
+      console.log(key.slice(0,28))
+      for(var i=0; i<key.length; i++){
+        if(key.slice(i,i+currentUid.length) === currentUid){
+          getMessageData(key)
+          console.log('====> Hamza')
+        }
+      }
+    }
+  })
+  let getMessageData = (chatNode) => {
+    console.log(oppositeUser)
+    db.ref(`chats/${chatNode}`).on('child_added', mesges => {
+      let data = mesges.val()
+      let classAndId, childClass;
+      console.log(data)
+      if(data.userId === currentUid){
+        classAndId = 'me'
+        childClass = 'meBg'
+      }
+      else{
+        classAndId = 'frnd'
+        childClass = 'frndBg'
+      }
+      // let li = document.createElement('li')
+      // li.setAttribute('class', classAndId)
+      // li.setAttribute('id', classAndId)
+      // chatList.appendChild(li)
+      // let span = document.createElement('span')
+      // let br = document.createElement('br')
+      // let sup = document.createElement('sup')
+      // span.setAttribute('class',`chatSnip ${childClass}`)
+      // span.innerText = data.text
+      // sup.setAttribute('class','time')
+      // sup.innerText = new Date(data.textTime*1000)
+      // li.appendChild(span)
+      // li.appendChild(br)
+      // li.appendChild(sup)
 
+      chatList.innerHTML = chatList.innerHTML + `
+       <li class="${classAndId}" id="${classAndId}">
+         <span class="chatSnip ${childClass}" >
+             ${data.text}
+         </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
+       </li>`
+    })
+  }
   btnSend.addEventListener("click", () => {
   let typeMessage = document.getElementById('typeMessage')
   console.log(typeMessage.value)
@@ -115,26 +167,10 @@ firebaseConfig = {
     }
     db.ref(`chats/${oppositeUser.userId+currentUid}/`).push(mesgObj)
     .then(()=>{
-      db.ref(`chats/${oppositeUser.userId+currentUid}/`).once('value', mesges => {
-        let data = mesges.val()
-        chatList.innerHTML = chatList.innerHTML + `
-        <li class="me" id="me">
-          <span class="chatSnip meBg">
-              ${data.text}
-          </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
-        </li>`
-      }).then(()=>{ 
-        
-      }).catch((er)=>{
-        console.log(er.message)
-      })
+      typeMessage.value = ''
     }).catch(err => {
-      console.log(err)
+      // console.log(err)
     })
-    // console.log(typeMessage.value)
-    // // console.log(chatList)
-     
-
   })
   //------------------CHATAREA END------------------
 
