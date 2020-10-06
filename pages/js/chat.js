@@ -44,7 +44,31 @@ firebaseConfig = {
     profile.style.display = 'none'
     messages.style.display = 'flex'
 
-    
+    db.ref('chats').on('value', snap=>{
+      
+      let data = snap.val()
+      let chatKey;
+      for(let key in data){
+        for(let i=0; i<key.length; i++){
+          if(key.slice(i, i+  currentUid.length) === currentUid){
+            chatKey =  key.slice(i, i+  currentUid.length)
+            // let oppChatKey = key - chatKey
+            console.log(key - chatKey)
+            let mesgesList = document.getElementById('mesgesList')
+        //     mesgesList.innerHTML += `
+        //     <li class="frnd" id="${key}"      >
+        //       <p class="userName" id="">
+        //         <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
+        //         ${user.fullName}
+        //       </p>
+        //     </li>
+
+        // `
+          }
+        }
+      }
+      
+    })
 
   })
 
@@ -55,8 +79,8 @@ firebaseConfig = {
     profile.style.display = 'none'
 
     friends.style.display = 'flex'
-    showFriendsList()
 
+    showFriendsList()
   })
 
   profLink.addEventListener('click', e => {
@@ -83,7 +107,7 @@ firebaseConfig = {
   let chatHeader = document.getElementById('chatHeader')
   let oppositeUser;
 
-  let showChatArea = (user, chatKey) => {
+  let showChatArea = (user) => {
     ifNoChat.style.display = 'none'
     messages.style.display = 'none'
     profile.style.display = 'none'
@@ -92,87 +116,92 @@ firebaseConfig = {
     oppositeUser = user
     chatHeader.innerHTML = `
     <span>
-      <img class="userImage" id='${user.userId}' key='${chatKey}' src="${user.profile}" width="35" height="35" alt="${user.fullName}">
+      <img class="userImage" src="${user.profile}" width="35" height="35" alt="${user.fullName}">
       ${user.fullName}
     </span>
     `
-    getMessageData(chatKey)
+    checkOneToOne()
     
   }
  
   let checkOneToOne = () => {
-      
+      db.ref().on('child_added', snap => {
+        let data = snap.val()
+        for(let key in data){
+          console.log(oppositeUser)
+          // console.log(key.slice(0,28))
+          let key1 = currentUid+oppositeUser.userId
+          let key2 = oppositeUser.userId+currentUid
+            if(key === key1 || key===key2 ){
+              getMessageData(key)
+              console.log('====> Hamza')
+            }
+        }
+      })
   }
 
   let getMessageData = (chatNode) => {
-    db.ref(`chats/${currentUid}/chatWith/${chatNode}`).on('value', snap => {
-      // console.log(snap.val())
+    // console.log('= = = = >Opposite User',oppositeUser)
+    db.ref(`chats/${chatNode}`).on('child_added', mesges => {
+      let data = mesges.val()
       let classAndId, childClass;
-      if(snap.val() !== null){
-        db.ref(`usersChats/${chatNode}`).on('child_added', snap=>{
-          let chats = snap.val()
-          // for(let key in chats){
-            if(chats.senderId === currentUid){
-              classAndId = 'me'
-              childClass = 'meBg'
-            }
-            else{
-              classAndId = 'frnd'
-              childClass = 'frndBg'
-            }
-            chatList.innerHTML = chatList.innerHTML + `
-            <li class="${classAndId}" id="${classAndId}">
-              <span class="chatSnip ${childClass}" >
-              ${chats.text}
-              </span><br /><sup class="time">${new Date(chats.textTime*1000)}</sup>
-            </li>`
-          // }
-        })
+      // console.log(data)
+      if(data.senderId === currentUid){
+        classAndId = 'me'
+        childClass = 'meBg'
       }
+      else{
+        classAndId = 'frnd'
+        childClass = 'frndBg'
+      }
+
+
+      chatList.innerHTML = chatList.innerHTML + `
+       <li class="${classAndId}" id="${classAndId}">
+         <span class="chatSnip ${childClass}" >
+             ${data.text}
+         </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
+       </li>`
     })
-
-
-    // db.ref(`chats/${chatNode}`).on('child_added', mesges => {
-    //   let data = mesges.val()
-    //   let classAndId, childClass;
-    //   if(data.senderId === currentUid){
-    //     classAndId = 'me'
-    //     childClass = 'meBg'
-    //   }
-    //   else{
-    //     classAndId = 'frnd'
-    //     childClass = 'frndBg'
-    //   }
-    //   chatList.innerHTML = chatList.innerHTML + `
-    //    <li class="${classAndId}" id="${classAndId}">
-    //      <span class="chatSnip ${childClass}" >
-    //          ${data.text}
-    //      </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
-    //    </li>`
-    // })
   }
   btnSend.addEventListener("click", () => {
   let typeMessage = document.getElementById('typeMessage')
-  let getOppositeId = document.getElementById('chatHeader').childNodes[1].childNodes[1].id
-  let getChatKey1 = document.getElementById('chatHeader').childNodes[1].childNodes[1]
-  let getChatKey = getChatKey1.getAttribute('key')
-
-  console.log(getOppositeId, getChatKey)
+  // console.log(typeMessage.value)
   let mesgObj = {
     text : typeMessage.value,
     textTime : firebase.database.ServerValue.TIMESTAMP,
     senderId : currentUid,
-    recieverId : getOppositeId
-    }
-    db.ref(`usersChats/${getChatKey}`).push(mesgObj).then(res => {
-      console.log('success')
-      
-    }).catch(e=>{
-      console.log(e)
-    })
+    recieverId : oppositeUser.userId
 
-    // let chatKey;
-    
+    }
+    let chatKey;
+    db.ref().on('child_added', snap => {
+      let data = snap.val()
+      console.log(data)
+      for(let key in data){
+        console.log(key)
+        let key1 = currentUid+oppositeUser.userId
+        let key2 = oppositeUser.userId+currentUid
+          if(key === key1 || key===key2 ){
+            console.log(key)
+            chatKey = key
+          }
+          else{
+            console.log(key)
+
+            chatKey = key2
+          }
+      }
+    })
+    let key1 = currentUid+oppositeUser.userId
+    let key2 = oppositeUser.userId+currentUid
+    db.ref(`chats/${chatKey}/`).push(mesgObj)
+    .then(()=>{
+      typeMessage.value = ''
+      // checkOneToOne()
+    }).catch(err => {
+      console.log(err)
+    })
   })
   //------------------CHATAREA END------------------
 
@@ -193,7 +222,7 @@ firebaseConfig = {
     frndsList.innerHTML = ``
     loader.style.display = 'block'
     // console.log('Friends List')
-    db.ref(`users`).on('value', snapshot => {
+    db.ref(`users`).once('value', snapshot => {
       let data = snapshot.val()
       console.log(data)
       
@@ -201,23 +230,10 @@ firebaseConfig = {
       setTimeout(()=>{
         loader.style.display = 'none'
         renderFrndList(data)
-      },100)
+      },1000)
     })
   }
-
-  // let userNameLen = name => {
-  //   if(name.length>5){
-  //     let shortName = name.slice(0, 5)+'..'
-  //     return shortName
-  //   }
-  //   else{
-  //     return name
-  //   }
-  // }
-
   let renderFrndList = (list) => {
-    frndsList.innerHTML = ``
-
     if(list){
       for(let key in list){
         let user = list[key]
@@ -225,15 +241,23 @@ firebaseConfig = {
           continue;
         }
         // console.log(user.fullName)
-        frndsList.innerHTML += `<li class="frnd" id="frnd">
-          <p class="userName" id="userName" label='${user.fullName}' onclick="userNameClick(this, '${user.userId}')">
+        frndsList.innerHTML += `
+        <!-- onclick="testing(this) -->
+        <li class="frnd" id="frnd"      >
+          <p class="userName" id="userName" onclick="userNameClick(this, '${user.userId}')">
             <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
             ${user.fullName}
           </p>
-          <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}')">
+          <p class="mesgIcon" id="mesgIcon" key="${user.userId}" onclick="mesgIconClick(this,'${user.userId}')">
             Message <span class="fa fa-comments"></span>
           </p>
-        </li>`        
+        </li>
+
+        `
+        mesgIcon = document.getElementById('mesgIcon')
+        userName = document.getElementById('userName')
+
+        
     }  
   }
   else{
@@ -245,53 +269,24 @@ firebaseConfig = {
   }
 
 }
-let mesgIconClick = (e, id) => {
+  let mesgIconClick = (e, id) => {
     let selectedUser;
-    let chatKey = currentUid+id
-    // let chatWith = []
-    let chatKeyFlag = false
-    db.ref(`chats/${currentUid}/chatWith/`).on('value', snap=>{
-      let getData = snap.val()
-      if(getData != null){
-      // console.log(getData)
-
-        for(let a in getData){
-          // console.log(a)
-          if(a === chatKey){
-            // console.log(chatKey)
-            chatKeyFlag = false
-            break;
-          }
-          else{
-            chatKeyFlag = true
-          }
-        }
-      }
-      else{
-        chatKeyFlag = true
-        // console.log(chatKeyFlag)
-
-      }
-      db.ref(`users`).on('value', snapshot => {
-        let users = snapshot.val()
-        selectedUser = users[id]
-        // console.log(chatKeyFlag)
-        
-        if(chatKeyFlag){
-          db.ref(`chats/${currentUid}/chatWith`).child(`${chatKey}`).set(chatKey)
-          .then(()=>{
-            db.ref(`chats/${id}/chatWith`).child(`${chatKey}`).set(chatKey)
-          })
-          .catch(e => {
-            console.log(e)
-         })
-        }
-        showChatArea(selectedUser, chatKey)
+    db.ref(`users/${id}`).once('value', snapshot => {
+      let data = snapshot.val()
+      selectedUser = data
+    }).then(()=>{
+      showChatArea(selectedUser)
+    }).catch((er)=>{
+      swal({
+        title:'Something Wrong',
+        icon: 'error',
+        text:er.message,
+        button:'ok'
       })
     })
-    
   }
-
+          
+          
   let userNameClick = (e, id) => {
     let selectedUser;
     // console.log('Click on userName', id)
@@ -301,14 +296,21 @@ let mesgIconClick = (e, id) => {
     }).then(()=>{
       Swal.fire({
         text: selectedUser.fullName,
-        textColor: '#12797e !important',
         imageUrl: selectedUser.profile,
         imageWidth: 200,
         imageHeight: 200,
+        imageBorderRadius: 10,
         imageAlt: 'User Profile Image',
-        showOkButton: true
+        showCancelButton: true,
+        confirmButtonColor: '#12797e',
+        cancelButtonColor: '#d3d3d3',
+        confirmButtonText: 'Start Chat'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // console.log('=====>', selectedUser)
+          showChatArea(selectedUser)
+        }
       })
-      
     }).catch((er)=>{
       swal({
         title:'Something Wrong',
@@ -320,56 +322,10 @@ let mesgIconClick = (e, id) => {
     
   }
 
-  let searchFrnd = document.getElementById('searchFrnd')
-
-  searchFrnd.addEventListener('keyup', e => {
-    frndsList.innerHTML = ``
-
-    db.ref('users/').on('value', snap => {
-      const data = snap.val()
-      // console.log(searchVal)
-      let findData = []
-      for(let key in data){
-        let x = data[key]
-        // console.log(searchFrnd.val, x.fullName)
-        if(searchFrnd.value.toLowerCase() === x.fullName.toLowerCase() && x.userId !== currentUid){
-        findData.push(x)
-        // console.log(findData)
-
-        }
-
-      }
-      if(findData.length>0){
-        // console.log('hamza')
-        frndsList.innerHTML += findData.map(user => {
-          return(`<li class="frnd" id="frnd">
-              <p class="userName" id="userName" onclick="userNameClick(this, '${user.userId}')">
-                <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
-                ${user.fullName}
-              </p>
-              <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}')">
-                Message <span class="fa fa-comments"></span>
-              </p>
-            </li>`)
-        })
-      }
-      else if(searchFrnd.value.length <= 0){
-        showFriendsList()
-      }
-      else{
-        frndsList.innerHTML += `
-            <!-- onclick="testing(this) -->
-            <p style="display: flex !important; justify-content:center !important; align-items: center !important;">
-                  Not Available
-            </p>
-    
-            `
-      }
-    })
-  })
-
   
-
+  let testing = e => {
+    // console.log(e.id)
+  }
   //------------------friends END------------------
 
   //------------------profile START------------------
