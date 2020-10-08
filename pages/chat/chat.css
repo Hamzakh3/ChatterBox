@@ -96,14 +96,14 @@ body{
 .messages{
     height: 70vh !important;
     display: flex;
-    align-items: center !important;
+    /* align-items: flex !important; */
     justify-content: flex-start !important;
     flex-direction: column !important;
 }
 .friends{
     height: 70vh !important;
     display: none;
-    align-items: flex !important;
+    /* align-items: flex !important; */
     justify-content: flex-start  !important;
     flex-direction: column !important;
 }
@@ -114,6 +114,15 @@ body{
     justify-content: center   !important;
     flex-direction: column !important;
 }
+.profileList{
+    display: flex;
+    padding: 0px;
+    list-style: none;
+}
+.profileList{
+    display: inline-block;
+}
+
 .signOut{
     font-size: medium !important;
 }
@@ -240,6 +249,27 @@ margin-bottom:8vh !important;
     flex:1 1 auto
 }
 /* - - - - -  Friends List - - - - - -  */
+.mesgesList{
+    padding: 0px;
+    height: 70vh;
+    scroll-behavior: smooth;
+    overflow: scroll;
+    display: inline-block;
+}
+.mesgesList li{
+    display: flex;
+    justify-content: space-between !important;
+    flex-direction: row !important;
+    /* align-items: center; */
+    padding: 4px 10px !important;
+    margin: 2px;
+}
+.mesgesList li:hover, .mesgesList li:active{
+    background-color: rgb(233, 233, 233);
+    /* cursor: pointer; */
+    border-radius: 10px 5px;
+    cursor: pointer;
+}
 .frndsList{
     /* list-style: none; */
     padding: 0px;
@@ -249,8 +279,8 @@ margin-bottom:8vh !important;
 }
 .frndsList li{
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+    justify-content: space-between !important;
+    flex-direction: row !important;
     /* align-items: center; */
     padding: 4px 10px !important;
     margin: 2px;
@@ -274,6 +304,10 @@ margin-bottom:8vh !important;
     font-weight: bold;
     margin: 0px;
 }
+.userName1{
+    font-weight: bold;
+    margin: 0px;
+}
 .userName:hover, 
 .userName:active{
     cursor: pointer;
@@ -287,6 +321,13 @@ margin-bottom:8vh !important;
     border-radius: 5px 10px;
     color: whitesmoke;
 }
+.icon{
+    margin: auto 0px;
+    padding: 2px 5px;
+    background-color: #12797e;
+    border-radius: 5px 10px;
+    color: whitesmoke;
+}
 .mesgIcon:hover, .mesgIcon:active{
     color: #12797e;
     background-color:  rgb(235, 235, 235);
@@ -294,6 +335,7 @@ margin-bottom:8vh !important;
     cursor: pointer;
     
 }
+
 .lastMessage{
     color: rgb(66, 66, 66);
 }

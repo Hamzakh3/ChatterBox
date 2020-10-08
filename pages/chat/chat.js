@@ -66,6 +66,8 @@ firebaseConfig = {
     messages.style.display = 'none'
     friends.style.display = 'none'
     profile.style.display = 'flex'
+
+    showProfile()
   })
 
   startConv.addEventListener('click', w => {
@@ -168,36 +170,44 @@ firebaseConfig = {
   })
   //------------------CHATAREA END------------------
 
-  //------------------ifNoChat START------------------
-
-  //------------------ifNoChat END------------------
-
   //------------------messages START------------------
-  let mesgesList = document.getElementById('mesgesList')
-  // let  convId = !document.getElementById('convId')?console.log('nia aya') :document.getElementById('convId')
-  // convId.addEventListener('click',e => {
-    // console.log('hamza')
-  // })
+  let abc = (e, oppId)=>{
+    console.log(oppId)
+    let selectedUser;
+    db.ref(`users/${oppId}`).once('value',snap=>{
+      selectedUser = snap.val()
+      // selectedUser = user[oppId]
+      let chatKey = selectedUser.chatsWith[currentUid]
+      // console.log(chatKey)
+      showChatArea(selectedUser, chatKey)
+    })
+  }
   let getConversation = ()=>{
+    mesgesList.innerHTML = ``
     db.ref(`users`).once('value', snap => {
       let users = snap.val()      
       let conv = users[currentUid].chatsWith      
-      for(let key in conv){
-        // console.log(users[key])
-        let user = users[key]
-        // console.log(user)
-        mesgesList.innerHTML = mesgesList.innerHTML+`
-          <li class="frnd" id="convId" key="${user.userId}">
-            <p class="userName" id="">
-              <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
-              ${user.fullName}
-            </p>
-            <p class="mesgIcon" id="">
-              <span class="fa fa-comments"></span>
-            </p>
-          </li>
-        `
-        
+      console.log(conv)
+      if(conv !==undefined){
+        for(let key in conv){
+          // console.log(users[key])
+          let user = users[key]
+          // console.log(user)
+          mesgesList.innerHTML = mesgesList.innerHTML+`
+            <li class="convList" id="convId" key="${user.userId}" onclick ="abc(this, '${user.userId}')" >
+              <p class="userName1" id="">
+                <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
+                ${user.fullName}
+              </p>
+              <p class="icon" id="">
+                <span class="fa fa-comments"></span>
+              </p>
+            </li>
+          `  
+        }
+      }else{
+        messages.style.display = 'none'
+        ifNoChat.style.display = 'flex'
       }
     })
   }
@@ -378,7 +388,6 @@ let mesgIconClick = (e, oppId, chatKey) => {
             <p style="display: flex !important; justify-content:center !important; align-items: center !important;">
                   Not Available
             </p>
-    
             `
       }
     })
@@ -388,7 +397,19 @@ let mesgIconClick = (e, oppId, chatKey) => {
 
   //------------------friends END------------------
 
-  //------------------profile START------------------
+  //------------------profile START----------------
+  let profileList = document.getElementById('profileList')
+  let showProfile = ()=> {
+    db.ref(`users/${currentUid}`).once('value', snap => {
+      let user = snap.val()
+      profileList.innerHTML = `
+      <li><img src='${user.profile}' alt="${user.fullName}" width='100' height='100'></li>
+      <li>${user.fullName}</li>
+      <li>${user.email}</li>
+
+      `
+    })
+  }
   //------------------profile END------------------
 
   //------------------sign out START------------------
