@@ -101,7 +101,7 @@ let signUpWithEmail = (user, pass, img) => {
     let userId = res.user.uid
     localStorage.setItem('uId', userId)
     user.userId = userId
-    user.chats = ['testing']
+    // user.chats = ['testing']
     let storageRef = firebase.storage().ref().child(`profile/${img.name}`)
     storageRef.put(img)
     .then(url => {

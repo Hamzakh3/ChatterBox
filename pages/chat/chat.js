@@ -44,7 +44,7 @@ firebaseConfig = {
     profile.style.display = 'none'
     messages.style.display = 'flex'
 
-    
+    getConversation();
 
   })
 
@@ -83,7 +83,7 @@ firebaseConfig = {
   let chatHeader = document.getElementById('chatHeader')
   let oppositeUser;
 
-  let showChatArea = (user, chatKey) => {
+  let showChatArea = (user, cKey) => {
     ifNoChat.style.display = 'none'
     messages.style.display = 'none'
     profile.style.display = 'none'
@@ -92,83 +92,75 @@ firebaseConfig = {
     oppositeUser = user
     chatHeader.innerHTML = `
     <span>
-      <img class="userImage" id='${user.userId}' key='${chatKey}' src="${user.profile}" width="35" height="35" alt="${user.fullName}">
+      <img class="userImage" id='${user.userId}' key='${cKey}' src="${user.profile}" width="35" height="35" alt="${user.fullName}">
       ${user.fullName}
     </span>
     `
-    getMessageData(chatKey)
+    // console.log(user)
+    getMessageData(cKey)
     
   }
  
-  let checkOneToOne = () => {
-      
-  }
-
   let getMessageData = (chatNode) => {
-    db.ref(`chats/${currentUid}/chatWith/${chatNode}`).on('value', snap => {
-      // console.log(snap.val())
-      let classAndId, childClass;
-      if(snap.val() !== null){
-        db.ref(`usersChats/${chatNode}`).on('child_added', snap=>{
-          let chats = snap.val()
-          // for(let key in chats){
-            if(chats.senderId === currentUid){
-              classAndId = 'me'
-              childClass = 'meBg'
-            }
-            else{
-              classAndId = 'frnd'
-              childClass = 'frndBg'
-            }
-            chatList.innerHTML = chatList.innerHTML + `
-            <li class="${classAndId}" id="${classAndId}">
-              <span class="chatSnip ${childClass}" >
-              ${chats.text}
-              </span><br /><sup class="time">${new Date(chats.textTime*1000)}</sup>
-            </li>`
-          // }
-        })
+    chatList.innerHTML = ``
+
+    db.ref(`chats/${chatNode}`).on('value', snap => {
+      let chatRoom = snap.val()
+      if(chatRoom !== null){
+    chatList.innerHTML = ``
+        
+        // db.ref(`chats/${chatNode}`).on('child_added', snap=>{
+                // let chats = snap.val()
+                // console.log(chatRoom)
+                for(let key in chatRoom){
+                  let chats = chatRoom[key]
+                  if(chats.senderId === currentUid){
+                    classAndId = 'me'
+                    childClass = 'meBg'
+                  }
+                  else{
+                    classAndId = 'frnd'
+                    childClass = 'frndBg'
+                  }
+                  chatList.innerHTML = chatList.innerHTML + `
+                  
+                  <li class="${classAndId}" id="${classAndId}">
+                    <span class="chatSnip ${childClass}" >
+                    ${chats.text}
+                    </span><br /><sup class="time">${new Date(chats.textTime).toLocaleTimeString()}</sup>
+                  </li>`
+                }
+              // })
       }
+      else{
+        chatList.innerHTML = `<li>No chat Available</li>`
+      }
+
     })
 
 
-    // db.ref(`chats/${chatNode}`).on('child_added', mesges => {
-    //   let data = mesges.val()
-    //   let classAndId, childClass;
-    //   if(data.senderId === currentUid){
-    //     classAndId = 'me'
-    //     childClass = 'meBg'
-    //   }
-    //   else{
-    //     classAndId = 'frnd'
-    //     childClass = 'frndBg'
-    //   }
-    //   chatList.innerHTML = chatList.innerHTML + `
-    //    <li class="${classAndId}" id="${classAndId}">
-    //      <span class="chatSnip ${childClass}" >
-    //          ${data.text}
-    //      </span><br /><sup class="time">${new Date(data.textTime*1000)}</sup>
-    //    </li>`
-    // })
+
   }
   btnSend.addEventListener("click", () => {
   let typeMessage = document.getElementById('typeMessage')
   let getOppositeId = document.getElementById('chatHeader').childNodes[1].childNodes[1].id
-  let getChatKey1 = document.getElementById('chatHeader').childNodes[1].childNodes[1]
-  let getChatKey = getChatKey1.getAttribute('key')
+  let getChatKey = document.getElementById('chatHeader').childNodes[1].childNodes[1].getAttribute('key')
+  // let getChatKey = getChatKey1.getAttribute('key')
 
-  console.log(getOppositeId, getChatKey)
+  // console.log(document.getElementById('chatList').lastChild)
   let mesgObj = {
     text : typeMessage.value,
     textTime : firebase.database.ServerValue.TIMESTAMP,
     senderId : currentUid,
     recieverId : getOppositeId
     }
-    db.ref(`usersChats/${getChatKey}`).push(mesgObj).then(res => {
-      console.log('success')
+    db.ref(`chats/${getChatKey}`).push(mesgObj).then(res => {
+      // console.log('success')
+      typeMessage.value = ''
+      
       
     }).catch(e=>{
-      console.log(e)
+      // console.log(e)
     })
 
     // let chatKey;
@@ -181,6 +173,35 @@ firebaseConfig = {
   //------------------ifNoChat END------------------
 
   //------------------messages START------------------
+  let mesgesList = document.getElementById('mesgesList')
+  // let  convId = !document.getElementById('convId')?console.log('nia aya') :document.getElementById('convId')
+  // convId.addEventListener('click',e => {
+    // console.log('hamza')
+  // })
+  let getConversation = ()=>{
+    db.ref(`users`).once('value', snap => {
+      let users = snap.val()      
+      let conv = users[currentUid].chatsWith      
+      for(let key in conv){
+        // console.log(users[key])
+        let user = users[key]
+        // console.log(user)
+        mesgesList.innerHTML = mesgesList.innerHTML+`
+          <li class="frnd" id="convId" key="${user.userId}">
+            <p class="userName" id="">
+              <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
+              ${user.fullName}
+            </p>
+            <p class="mesgIcon" id="">
+              <span class="fa fa-comments"></span>
+            </p>
+          </li>
+        `
+        
+      }
+    })
+  }
+  
   //------------------messages END------------------
 
   //------------------friends START------------------
@@ -195,7 +216,7 @@ firebaseConfig = {
     // console.log('Friends List')
     db.ref(`users`).on('value', snapshot => {
       let data = snapshot.val()
-      console.log(data)
+      // console.log(data)
       
 
       setTimeout(()=>{
@@ -230,7 +251,7 @@ firebaseConfig = {
             <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
             ${user.fullName}
           </p>
-          <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}')">
+          <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}', '${user.chatsWith ? user.chatsWith[currentUid] : null}')">
             Message <span class="fa fa-comments"></span>
           </p>
         </li>`        
@@ -245,51 +266,45 @@ firebaseConfig = {
   }
 
 }
-let mesgIconClick = (e, id) => {
+let createChatNode = (cId, oId, cK)=>{
+  db.ref(`users/${cId}/chatsWith/${oId}`).set(cK).then(res=>{
+    // console.log('=> new chat node created for both user')
+  }).catch(e=>{console.log(e)})
+  db.ref(`users/${oId}/chatsWith/${cId}`).set(cK)
+  .then(res=>{
+    // console.log('new chat node created for both user')  
+  }).catch(e=>{console.log(e)})
+}
+let mesgIconClick = (e, oppId, chatKey) => {
     let selectedUser;
-    let chatKey = currentUid+id
+    let chKey = currentUid+oppId
     // let chatWith = []
     let chatKeyFlag = false
-    db.ref(`chats/${currentUid}/chatWith/`).on('value', snap=>{
-      let getData = snap.val()
-      if(getData != null){
-      // console.log(getData)
 
-        for(let a in getData){
-          // console.log(a)
-          if(a === chatKey){
-            // console.log(chatKey)
-            chatKeyFlag = false
-            break;
+    db.ref(`users`).once('value', snap=>{
+      let users = snap.val()
+      selectedUser = users[oppId] 
+      let forUid =  users[currentUid].chatsWith
+      let forOppId =  users[oppId].chatsWith
+      if(forUid !== undefined && forOppId !== undefined){ 
+          if(forUid[oppId] === chatKey && forOppId[currentUid] === chatKey){
+            // console.log(forUid[oppId], forOppId[currentUid])
+            // console.log('dono same hain')
+            showChatArea(selectedUser, chatKey)
           }
           else{
-            chatKeyFlag = true
+            // console.log('inner else')
+            createChatNode(currentUid, oppId, chKey)
+            showChatArea(selectedUser, selectedUser.chatsWith? selectedUser.chatsWith[currentUid]?selectedUser.chatsWith[currentUid]: chKey : chKey)    
           }
-        }
       }
       else{
-        chatKeyFlag = true
-        // console.log(chatKeyFlag)
-
+        console.log('else')
+        createChatNode(currentUid, oppId, chKey)
+        showChatArea(selectedUser, selectedUser.chatsWith? selectedUser.chatsWith[currentUid]?selectedUser.chatsWith[currentUid]: chKey : chKey)        
       }
-      db.ref(`users`).on('value', snapshot => {
-        let users = snapshot.val()
-        selectedUser = users[id]
-        // console.log(chatKeyFlag)
-        
-        if(chatKeyFlag){
-          db.ref(`chats/${currentUid}/chatWith`).child(`${chatKey}`).set(chatKey)
-          .then(()=>{
-            db.ref(`chats/${id}/chatWith`).child(`${chatKey}`).set(chatKey)
-          })
-          .catch(e => {
-            console.log(e)
-         })
-        }
-        showChatArea(selectedUser, chatKey)
-      })
-    })
-    
+      
+    }) 
   }
 
   let userNameClick = (e, id) => {
@@ -342,12 +357,13 @@ let mesgIconClick = (e, id) => {
       if(findData.length>0){
         // console.log('hamza')
         frndsList.innerHTML += findData.map(user => {
+          // let chKey = currentUid+user.userId
           return(`<li class="frnd" id="frnd">
               <p class="userName" id="userName" onclick="userNameClick(this, '${user.userId}')">
                 <img class="user-images" src="${user.profile}" alt="${user.fullName}"> 
                 ${user.fullName}
               </p>
-              <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}')">
+              <p class="mesgIcon" id="mesgIcon" onclick="mesgIconClick(this,'${user.userId}', '${user.chatsWith ? user.chatsWith[currentUid] : null}')">
                 Message <span class="fa fa-comments"></span>
               </p>
             </li>`)
@@ -414,3 +430,5 @@ let mesgIconClick = (e, id) => {
       // li.appendChild(span)
       // li.appendChild(br)
       // li.appendChild(sup)
+
+

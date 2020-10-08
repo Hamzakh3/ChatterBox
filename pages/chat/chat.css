@@ -95,14 +95,14 @@ body{
 }
 .messages{
     height: 70vh !important;
-    display: none;
+    display: flex;
     align-items: center !important;
-    justify-content: center   !important;
+    justify-content: flex-start !important;
     flex-direction: column !important;
 }
 .friends{
     height: 70vh !important;
-    display: flex;
+    display: none;
     align-items: flex !important;
     justify-content: flex-start  !important;
     flex-direction: column !important;
