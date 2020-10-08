@@ -38,10 +38,10 @@ window.addEventListener('load', () => {
   })
 
   let signIn = (email, pass) => {
-    console.log(email, pass)
+    // console.log(email, pass)
     firebase.auth().signInWithEmailAndPassword(email, pass)
       .then(res => {
-        console.log(res.user.uid)
+        // console.log(res.user.uid)
         localStorage.setItem('uId', res.user.uid)
         window.location.replace(`./pages/chat/chat.html`)
       }).catch(error => {
@@ -66,15 +66,15 @@ loginFb.addEventListener('click',()=>{
 
   let signInWithFb = () => {
     console.log(`Login with Facebook`)
-    // firebase.auth().signInWithPopup(provider).then((result)=>{
-    //   console.log(result)
-    //   let token=result.credential.accessToken;
-    //   console.log(token)
-    //   let user=result.user;
-    //   console.log(user);
-    // }).catch((e)=>{
-    //   console.log(e.message);
-    // })
+    firebase.auth().signInWithPopup(provider).then((result)=>{
+      console.log(result)
+      let token=result.credential.accessToken;
+      console.log(token)
+      let user=result.user;
+      console.log(user);
+    }).catch((e)=>{
+      console.log(e.message);
+    })
   }
 //- - - - - - - - - - Sign Up With Email
 
@@ -90,7 +90,7 @@ loginFb.addEventListener('click',()=>{
       fullName,
       email
     }
-    console.log('Successful')
+    // console.log('Successful')
 
     signUpWithEmail(newUser, pass, image)
   })

@@ -76,6 +76,8 @@ firebaseConfig = {
     messages.style.display = 'none'
     profile.style.display = 'none'
     friends.style.display = 'flex'
+
+    showFriendsList()
   })
 
 
@@ -172,7 +174,7 @@ firebaseConfig = {
 
   //------------------messages START------------------
   let abc = (e, oppId)=>{
-    console.log(oppId)
+    // console.log(oppId)
     let selectedUser;
     db.ref(`users/${oppId}`).once('value',snap=>{
       selectedUser = snap.val()
@@ -182,12 +184,13 @@ firebaseConfig = {
       showChatArea(selectedUser, chatKey)
     })
   }
+
   let getConversation = ()=>{
     mesgesList.innerHTML = ``
     db.ref(`users`).once('value', snap => {
       let users = snap.val()      
       let conv = users[currentUid].chatsWith      
-      console.log(conv)
+      // console.log(conv)
       if(conv !==undefined){
         for(let key in conv){
           // console.log(users[key])
@@ -206,12 +209,16 @@ firebaseConfig = {
           `  
         }
       }else{
-        messages.style.display = 'none'
-        ifNoChat.style.display = 'flex'
+        
+        mesgesList.innerHTML = `
+        <p style="display: flex !important; justify-content:center !important; align-items: center !important;">
+                  No Chats Available
+            </p>
+      `  
       }
     })
   }
-  
+  // getConversation()
   //------------------messages END------------------
 
   //------------------friends START------------------
@@ -309,7 +316,7 @@ let mesgIconClick = (e, oppId, chatKey) => {
           }
       }
       else{
-        console.log('else')
+        // console.log('else')
         createChatNode(currentUid, oppId, chKey)
         showChatArea(selectedUser, selectedUser.chatsWith? selectedUser.chatsWith[currentUid]?selectedUser.chatsWith[currentUid]: chKey : chKey)        
       }
@@ -398,15 +405,24 @@ let mesgIconClick = (e, oppId, chatKey) => {
   //------------------friends END------------------
 
   //------------------profile START----------------
-  let profileList = document.getElementById('profileList')
+  let profileInfo = document.getElementById('profileInfo')
+
   let showProfile = ()=> {
     db.ref(`users/${currentUid}`).once('value', snap => {
       let user = snap.val()
-      profileList.innerHTML = `
-      <li><img src='${user.profile}' alt="${user.fullName}" width='100' height='100'></li>
-      <li>${user.fullName}</li>
-      <li>${user.email}</li>
-
+      profileInfo.innerHTML = `
+        <div class="profileImg">
+          <img src="${user.profile}" alt="${user.fullName}"/>
+          
+        </div>
+        <div class="info">
+          <p class="labl">User Name</p>
+          <p>${user.fullName}</p>
+          <p class="labl">Email</p>
+          <p>${user.email}</p>
+          <p class="labl">Password</p>
+          <p class="passChange"><a href="">******</a></p>
+        </div>
       `
     })
   }

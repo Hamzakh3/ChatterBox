@@ -79,7 +79,7 @@ body{
 
 .ifNoChat{
     height: 70vh !important;
-    display: none;
+    display: flex;
     align-items: center !important;
     justify-content: center   !important;
     flex-direction: column !important;
@@ -95,7 +95,7 @@ body{
 }
 .messages{
     height: 70vh !important;
-    display: flex;
+    display: none;
     /* align-items: flex !important; */
     justify-content: flex-start !important;
     flex-direction: column !important;
@@ -111,16 +111,59 @@ body{
     height: 70vh !important;
     display: none;
     align-items: center !important;
-    justify-content: center   !important;
+    justify-content: center  !important;
     flex-direction: column !important;
 }
-.profileList{
-    display: flex;
-    padding: 0px;
-    list-style: none;
+.heading{
+    background-color: #12797ee8;
+    /* width: 95% !important; */
+    padding: 5px 15px !important;
+    color: whitesmoke !important;
+    margin: 10px auto auto auto !important;
+    border-radius: 5px;
+    font-size: 24px;
 }
-.profileList{
-    display: inline-block;
+.profileInfo{
+    /* width: 40vw; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center !important;
+    margin: 10px auto auto auto;
+
+}
+.info{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 0.5em;
+    margin: 18px 5px 0px 5px;
+
+}
+
+.profileImg img{
+    border-radius: 100%;
+    width: 140px;
+    height: 140px;
+}
+.passChange a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.labl{
+    font-size: 16px !important;
+    font-weight: 500;
+    /* background-color: rgb(202, 202, 202); */
+    /* padding: 5px; */
+    color: #0c585c;
+    text-decoration: underline;
+    border-radius: 5px;
+    margin-top:8px;
+
 }
 
 .signOut{
@@ -144,10 +187,10 @@ margin-bottom:8vh !important;
 
 .userImage{
     border-radius: 100%;
-    border: 1px solid rgb(7, 163, 7);
+    border: 1px solid #0098a0;
 }
 .chatHeader{
-    color: rgb(7, 163, 7); 
+    color: #0098a0; 
     padding: 5px;
     font-size: 18px;
     font-weight: 500;
@@ -250,6 +293,8 @@ margin-bottom:8vh !important;
 }
 /* - - - - -  Friends List - - - - - -  */
 .mesgesList{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
     padding: 0px;
     height: 70vh;
     scroll-behavior: smooth;
@@ -292,6 +337,7 @@ margin-bottom:8vh !important;
     border-radius: 10px 5px;
 }
 .searchFrnd{
+    margin: 10px auto!important;
     background-image: url('../../icons/search.jpg');
     background-repeat: no-repeat;
     background-position:center left;
