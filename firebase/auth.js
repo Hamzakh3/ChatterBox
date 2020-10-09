@@ -69,11 +69,36 @@ loginFb.addEventListener('click',()=>{
     firebase.auth().signInWithPopup(provider).then((result)=>{
       console.log(result)
       let token=result.credential.accessToken;
-      console.log(token)
-      let user=result.user;
-      console.log(user);
-    }).catch((e)=>{
-      console.log(e.message);
+      console.log(result.additionalUserInfo)
+      let user =result.user;
+      // console.log(user);
+      let userObj = {
+        fullName : user.displayName,
+        email: user.email,
+        userId: user.uid,
+        progile: user.photoURL
+      }
+      // firebase.database().ref(`users/${user.uid}`)
+      firebase.database().ref(`users/${user.uid}`).once('value', snap=>{
+        console.log(snap.val())
+        let data = snap.val()
+        if(data !== null){
+          localStorage.setItem('uId', user.uid)
+          window.location.replace(`./pages/chat/chat.html`)
+        }
+        else{
+          firebase.database().ref(`users/${user.uid}`).set(userObj)
+          .then(()=>{
+            localStorage.setItem('uId', user.uid)
+            window.location.replace(`./pages/chat/chat.html`)
+          }).catch(e=>{
+            console.log(e)
+          })
+        }
+      }).catch(e=>{
+        console.log(e)
+      })
+      
     })
   }
 //- - - - - - - - - - Sign Up With Email
