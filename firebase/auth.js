@@ -76,9 +76,11 @@ loginFb.addEventListener('click',()=>{
         fullName : user.displayName,
         email: user.email,
         userId: user.uid,
-        progile: user.photoURL
+        profile: user.photoURL
       }
-      // firebase.database().ref(`users/${user.uid}`)
+      // let storageRef = firebase.storage().ref().child(`profile/${}`)
+      // storageRef.put(img)
+      
       firebase.database().ref(`users/${user.uid}`).once('value', snap=>{
         console.log(snap.val())
         let data = snap.val()
