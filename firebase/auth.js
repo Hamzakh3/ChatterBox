@@ -78,8 +78,7 @@ loginFb.addEventListener('click',()=>{
         userId: user.uid,
         profile: user.photoURL
       }
-      // let storageRef = firebase.storage().ref().child(`profile/${}`)
-      // storageRef.put(img)
+
       
       firebase.database().ref(`users/${user.uid}`).once('value', snap=>{
         console.log(snap.val())
